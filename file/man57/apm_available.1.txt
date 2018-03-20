@@ -1,0 +1,35 @@
+APM_AVAILABLE(1)            General Commands Manual           APM_AVAILABLE(1)
+
+
+
+NNAAMMEE
+       apm_available - test whether APM subsystem is available
+
+
+SSYYNNOOPPSSIISS
+       aappmm__aavvaaiillaabbllee
+
+
+DDEESSCCRRIIPPTTIIOONN
+       aappmm__aavvaaiillaabbllee checks whether the APM ("Advanced Power Management") sub-
+       system is available, as evidenced by  the  presence  of  the  /proc/apm
+       file.
+
+
+OOPPTTIIOONNSS
+       None.
+
+EEXXIITT SSTTAATTUUSS
+       00 (true)       APM subsystem is available
+       11 (false)      APM subsystem is not available
+       22              usage error (arguments supplied)
+
+FFIILLEESS
+       _/_p_r_o_c_/_a_p_m         APM status information file
+
+AAUUTTHHOORR
+       This manual page was written by Thomas Hood <jdthood@yahoo.co.uk>.
+
+
+
+                                  2006-01-03                  APM_AVAILABLE(1)

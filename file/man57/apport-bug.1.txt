@@ -1,0 +1,104 @@
+apport-bug(1)               General Commands Manual              apport-bug(1)
+
+
+
+NNAAMMEE
+       apport-bug,  apport-collect - file a bug report using Apport, or update
+       an existing report
+
+
+SSYYNNOOPPSSIISS
+       aappppoorrtt--bbuugg
+
+       aappppoorrtt--bbuugg _s_y_m_p_t_o_m | _p_i_d | _p_a_c_k_a_g_e | _p_r_o_g_r_a_m _p_a_t_h | _._a_p_p_o_r_t_/_._c_r_a_s_h _f_i_l_e
+
+       aappppoorrtt--ccoolllleecctt _r_e_p_o_r_t_-_n_u_m_b_e_r
+
+
+DDEESSCCRRIIPPTTIIOONN
+       aappppoorrtt--bbuugg reports problems to your distribution's bug tracking system,
+       using Apport to collect a lot of local information about your system to
+       help the developers to fix the  problem  and  avoid  unnecessary  ques-
+       tion/answer turnarounds.
+
+       You  should  always  start  with  running aappppoorrtt--bbuugg without arguments,
+       which will present a list of known symptoms.  This  will  generate  the
+       most useful bug reports.
+
+       If  there  is  no  matching symptom, you need to determine the affected
+       program or package yourself. You can provide a package name or  program
+       name to aappppoorrtt--bbuugg, e. g.:
+
+           apport-bug firefox
+           apport-bug /usr/bin/unzip
+
+       In  order to add more information to the bug report that could help the
+       developers to fix the problem,  you  can  also  specify  a  process  ID
+       instead:
+
+           $ pidof gnome-terminal
+           5139
+           $ apport-bug 5139
+
+       As a special case, to report a bug against the Linux kernel, you do not
+       need   to   use   the   full   package    name    (such    as    linux-
+       image-2.6.28-4-generic); you can just use
+
+           apport-bug linux
+
+       to report a bug against the currently running kernel.
+
+       Finally,  you  can use this program to report a previously stored crash
+       or bug report:
+
+           apport-bug /var/crash/_bin_bash.1000.crash
+           apport-bug /tmp/apport.firefox.332G9t.apport
+
+       Bug reports can be written to a file by using the ----ssaavvee option  or  by
+       using aappppoorrtt--ccllii.
+
+       aappppoorrtt--bbuugg detects whether KDE or Gnome is running and calls aappppoorrtt--ggttkk
+       or aappppoorrtt--kkddee accordingly. If neither is available, or the session does
+       not run under X11, it calls aappppoorrtt--ccllii for a command-line client.
+
+
+UUPPDDAATTIINNGG EEXXIISSTTIINNGG RREEPPOORRTTSS
+       aappppoorrtt--ccoolllleecctt collects the same information as apport-bug, but adds it
+       to an already reported problem you have submitted. This  is  useful  if
+       the  report was not originally filed through Apport, and the developers
+       ask you to attach information from your system.
+
+
+OOPPTTIIOONNSS
+       Please see the aappppoorrtt--ccllii((11)) manpage for possible options.
+
+
+EENNVVIIRROONNMMEENNTT
+       AAPPPPOORRTT__IIGGNNOORREE__OOBBSSOOLLEETTEE__PPAACCKKAAGGEESS
+              Apport refuses to create bug  reports  if  the  package  or  any
+              dependency  is not current. If this environment variable is set,
+              this check is waived. Experts who will thoroughly check the sit-
+              uation  before  filing  a  bug  report  can define this in their
+              ~~//..bbaasshhrrcc or  temporarily  on  the  command  line  when  calling
+              aappppoorrtt--bbuugg.
+
+
+FFIILLEESS
+       apport  crash  files  are  written  in  to //vvaarr//ccrraasshh by default, named
+       uniquely per binary name and user id.  They are not deleted after being
+       sent  to  the  bug  tracker  (but  from cron when they get older than 7
+       days). You can extract the core file (if  any)  and  other  information
+       using aappppoorrtt--uunnppaacckk..
+
+
+SSEEEE AALLSSOO
+       aappppoorrtt--ccllii(1), aappppoorrtt--uunnppaacckk(1)
+
+
+AAUUTTHHOORR
+       aappppoorrtt  and  the  accompanying tools are developed by Martin Pitt <mar-
+       tin.pitt@ubuntu.com>.
+
+
+
+Martin Pitt                   September 08, 2009                 apport-bug(1)

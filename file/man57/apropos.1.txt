@@ -1,0 +1,163 @@
+APROPOS(1)                    Manual pager utils                    APROPOS(1)
+
+
+
+NNAAMMEE
+       apropos - search the manual page names and descriptions
+
+SSYYNNOOPPSSIISS
+       aapprrooppooss  [--ddaallvv??VV] [--ee|--ww|--rr] [--ss _l_i_s_t] [--mm _s_y_s_t_e_m[,...]] [--MM _p_a_t_h] [--LL
+       _l_o_c_a_l_e] [--CC _f_i_l_e] _k_e_y_w_o_r_d ...
+
+DDEESSCCRRIIPPTTIIOONN
+       Each manual page has a short description available within it.   aapprrooppooss
+       searches the descriptions for instances of _k_e_y_w_o_r_d.
+
+       _k_e_y_w_o_r_d  is  usually  a regular expression, as if (--rr) was used, or may
+       contain wildcards (--ww), or match the exact keyword (--ee).   Using  these
+       options,  it  may  be  necessary to quote the _k_e_y_w_o_r_d or escape (\) the
+       special characters to stop the shell from interpreting them.
+
+       The standard matching rules allow matches to be made against  the  page
+       name and word boundaries in the description.
+
+       The  database  searched  by  aapprrooppooss  is  updated by the mmaannddbb program.
+       Depending on your installation, this may be run by a periodic cron job,
+       or  may  need  to  be  run  manually  after  new manual pages have been
+       installed.
+
+OOPPTTIIOONNSS
+       --dd, ----ddeebbuugg
+              Print debugging information.
+
+       --vv, ----vveerrbboossee
+              Print verbose warning messages.
+
+       --rr, ----rreeggeexx
+              Interpret each keyword as a regular  expression.   This  is  the
+              default  behaviour.   Each  keyword  will be matched against the
+              page names and the descriptions independently.  It can match any
+              part of either.  The match is not limited to word boundaries.
+
+       --ww, ----wwiillddccaarrdd
+              Interpret each keyword as a pattern containing shell style wild-
+              cards.  Each keyword will be matched against the page names  and
+              the  descriptions  independently.   If  ----eexxaacctt  is also used, a
+              match will only be found  if  an  expanded  keyword  matches  an
+              entire  description or page name.  Otherwise the keyword is also
+              allowed to match on word boundaries in the description.
+
+       --ee, ----eexxaacctt
+              Each keyword will be exactly matched against the page names  and
+              the descriptions.
+
+       --aa, ----aanndd
+              Only  display  items  that match all the supplied keywords.  The
+              default is to display items that match any keyword.
+
+       --ll, ----lloonngg
+              Do not trim output to the terminal width.  Normally, output will
+              be  truncated  to  the terminal width to avoid ugly results from
+              poorly-written NNAAMMEE sections.
+
+       --ss _l_i_s_t, ----sseeccttiioonnss _l_i_s_t, ----sseeccttiioonn _l_i_s_t
+              Search only the given manual sections.   _l_i_s_t  is  a  colon-  or
+              comma-separated list of sections.  If an entry in _l_i_s_t is a sim-
+              ple section,  for  example  "3",  then  the  displayed  list  of
+              descriptions  will include pages in sections "3", "3perl", "3x",
+              and so on; while if an entry in _l_i_s_t has an extension, for exam-
+              ple "3perl", then the list will only include pages in that exact
+              part of the manual section.
+
+       --mm _s_y_s_t_e_m[,...], ----ssyysstteemmss==_s_y_s_t_e_m[,...]
+              If this system has access to  other  operating  system's  manual
+              page  descriptions,  they can be searched using this option.  To
+              search NewOS's manual  page  descriptions,  use  the  option  --mm
+              NNeewwOOSS.
+
+              The  _s_y_s_t_e_m  specified  can  be a combination of comma-delimited
+              operating system names.  To include a search of the native oper-
+              ating  system's wwhhaattiiss descriptions, include the system name mmaann
+              in the argument string.  This option will override  the  $SSYYSSTTEEMM
+              environment variable.
+
+       --MM _p_a_t_h, ----mmaannppaatthh==_p_a_t_h
+              Specify  an alternate set of colon-delimited manual page hierar-
+              chies to search.  By default, aapprrooppooss uses the $MMAANNPPAATTHH environ-
+              ment  variable,  unless  it  is empty or unset, in which case it
+              will determine an appropriate manpath based on your $PPAATTHH  envi-
+              ronment  variable.   This option overrides the contents of $MMAANN--
+              PPAATTHH.
+
+       --LL _l_o_c_a_l_e, ----llooccaallee==_l_o_c_a_l_e
+              aapprrooppooss will normally determine your current locale by a call to
+              the  C function sseettllooccaallee(3) which interrogates various environ-
+              ment variables, possibly including $LLCC__MMEESSSSAAGGEESS and  $LLAANNGG.   To
+              temporarily  override  the  determined value, use this option to
+              supply a _l_o_c_a_l_e string directly to aapprrooppooss.  Note that  it  will
+              not  take  effect  until  the  search for pages actually begins.
+              Output such as the help message will always be displayed in  the
+              initially determined locale.
+
+       --CC _f_i_l_e, ----ccoonnffiigg--ffiillee==_f_i_l_e
+              Use  this  user  configuration  file  rather than the default of
+              _~_/_._m_a_n_p_a_t_h.
+
+       --??, ----hheellpp
+              Print a help message and exit.
+
+       ----uussaaggee
+              Print a short usage message and exit.
+
+       --VV, ----vveerrssiioonn
+              Display version information.
+
+EEXXIITT SSTTAATTUUSS
+       00      Successful program execution.
+
+       11      Usage, syntax or configuration file error.
+
+       22      Operational error.
+
+       1166     Nothing was found that matched the criteria specified.
+
+EENNVVIIRROONNMMEENNTT
+       SSYYSSTTEEMM If $SSYYSSTTEEMM is set, it will have the same effect  as  if  it  had
+              been specified as the argument to the --mm option.
+
+       MMAANNPPAATTHH
+              If $MMAANNPPAATTHH is set, its value is interpreted as the colon-delim-
+              ited manual page hierarchy search path to use.
+
+       MMAANNWWIIDDTTHH
+              If $MMAANNWWIIDDTTHH is set, its value is used  as  the  terminal  width
+              (see  the  ----lloonngg option).  If it is not set, the terminal width
+              will be calculated using an iiooccttll(2) if available, the value  of
+              $CCOOLLUUMMNNSS, or falling back to 80 characters if all else fails.
+
+       PPOOSSIIXXLLYY__CCOORRRREECCTT
+              If  $PPOOSSIIXXLLYY__CCOORRRREECCTT  is  set, even to a null value, the default
+              aapprrooppooss search will be as an  extended  regex  (--rr).   Nowadays,
+              this is the default behaviour anyway.
+
+FFIILLEESS
+       _/_u_s_r_/_s_h_a_r_e_/_m_a_n_/_i_n_d_e_x_._(_b_t_|_d_b_|_d_i_r_|_p_a_g_)
+              A traditional global _i_n_d_e_x database cache.
+
+       _/_v_a_r_/_c_a_c_h_e_/_m_a_n_/_i_n_d_e_x_._(_b_t_|_d_b_|_d_i_r_|_p_a_g_)
+              An FHS compliant global _i_n_d_e_x database cache.
+
+       _/_u_s_r_/_s_h_a_r_e_/_m_a_n_/_._._._/_w_h_a_t_i_s
+              A traditional wwhhaattiiss text database.
+
+SSEEEE AALLSSOO
+       mmaann(1), wwhhaattiiss(1), mmaannddbb(8)
+
+AAUUTTHHOORR
+       Wilf. (G.Wilford@ee.surrey.ac.uk).
+       Fabrizio Polacco (fpolacco@debian.org).
+       Colin Watson (cjwatson@debian.org).
+
+
+
+2.6.7.1                           2014-04-10                        APROPOS(1)

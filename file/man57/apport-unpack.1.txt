@@ -1,0 +1,33 @@
+apport-unpack(1)            General Commands Manual           apport-unpack(1)
+
+
+
+NNAAMMEE
+       apport-unpack  -  extract  the  fields  of a problem report to separate
+       files
+
+
+SSYYNNOOPPSSIISS
+       aappppoorrtt--uunnppaacckk _r_e_p_o_r_t _t_a_r_g_e_t_-_d_i_r_e_c_t_o_r_y
+
+
+DDEESSCCRRIIPPTTIIOONN
+       A problem report, as produced by aappppoorrtt is a single file with a set  of
+       key/value  pairs  in the RFC822 syntax. This tool disassembles a report
+       such that the value of each entry is written into a separate file, with
+       the key as file name. This is particularly useful for large binary data
+       like the core dump.
+
+       _r_e_p_o_r_t is either a path to an existing apport crash report, or  '-'  to
+       read from stdin.
+
+       The _t_a_r_g_e_t_-_d_i_r_e_c_t_o_r_y must either be nonexisting or empty.
+
+
+AAUUTTHHOORR
+       aappppoorrtt  and  the  accompanying tools are developed by Martin Pitt <mar-
+       tin.pitt@ubuntu.com>.
+
+
+
+Martin Pitt                   September 09, 2006              apport-unpack(1)

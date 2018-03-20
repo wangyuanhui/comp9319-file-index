@@ -1,0 +1,475 @@
+APT-FTPARCHIVE(1)                     APT                    APT-FTPARCHIVE(1)
+
+
+
+NNAAMMEE
+       apt-ftparchive - Utility to generate index files
+
+SSYYNNOOPPSSIISS
+       aapptt--ffttppaarrcchhiivvee [--ddssqq] [----mmdd55] [----ddeelliinnkk] [----rreeaaddoonnllyy] [----ccoonntteennttss]
+                      [----aarrcchh _a_r_c_h_i_t_e_c_t_u_r_e] [--oo==_c_o_n_f_i_g___s_t_r_i_n_g]
+                      [--cc==_c_o_n_f_i_g___f_i_l_e]
+                      {packages _p_a_t_h... [_o_v_e_r_r_i_d_e_-_f_i_l_e [_p_a_t_h_p_r_e_f_i_x]]  |
+                      sources _p_a_t_h... [_o_v_e_r_r_i_d_e_-_f_i_l_e [_p_a_t_h_p_r_e_f_i_x]]  |
+                      contents _p_a_t_h  | release _p_a_t_h  |
+                      generate _c_o_n_f_i_g___f_i_l_e _s_e_c_t_i_o_n...  | clean _c_o_n_f_i_g___f_i_l_e  |
+                      {-v | --version} | {-h | --help}}
+
+DDEESSCCRRIIPPTTIIOONN
+       aapptt--ffttppaarrcchhiivvee is the command line tool that generates the index files
+       that APT uses to access a distribution source. The index files should
+       be generated on the origin site based on the content of that site.
+
+       aapptt--ffttppaarrcchhiivvee is a superset of the ddppkkgg--ssccaannppaacckkaaggeess(1) program,
+       incorporating its entire functionality via the packages command. It
+       also contains a contents file generator, contents, and an elaborate
+       means to 'script' the generation process for a complete archive.
+
+       Internally aapptt--ffttppaarrcchhiivvee can make use of binary databases to cache the
+       contents of a .deb file and it does not rely on any external programs
+       aside from ggzziipp(1). When doing a full generate it automatically
+       performs file-change checks and builds the desired compressed output
+       files.
+
+       Unless the --hh, or ----hheellpp option is given, one of the commands below
+       must be present.
+
+       ppaacckkaaggeess
+           The packages command generates a package file from a directory
+           tree. It takes the given directory and recursively searches it for
+           .deb files, emitting a package record to stdout for each. This
+           command is approximately equivalent to ddppkkgg--ssccaannppaacckkaaggeess(1).
+
+           The option ----ddbb can be used to specify a binary caching DB.
+
+       ssoouurrcceess
+           The sources command generates a source index file from a directory
+           tree. It takes the given directory and recursively searches it for
+           .dsc files, emitting a source record to stdout for each. This
+           command is approximately equivalent to ddppkkgg--ssccaannssoouurrcceess(1).
+
+           If an override file is specified then a source override file will
+           be looked for with an extension of .src. The --source-override
+           option can be used to change the source override file that will be
+           used.
+
+       ccoonntteennttss
+           The contents command generates a contents file from a directory
+           tree. It takes the given directory and recursively searches it for
+           .deb files, and reads the file list from each file. It then sorts
+           and writes to stdout the list of files matched to packages.
+           Directories are not written to the output. If multiple packages own
+           the same file then each package is separated by a comma in the
+           output.
+
+           The option ----ddbb can be used to specify a binary caching DB.
+
+       rreelleeaassee
+           The release command generates a Release file from a directory tree.
+           It recursively searches the given directory for uncompressed
+           Packages and Sources files and ones compressed with ggzziipp, bbzziipp22 or
+           llzzmmaa as well as Release and md5sum.txt files by default
+           (APT::FTPArchive::Release::Default-Patterns). Additional filename
+           patterns can be added by listing them in
+           APT::FTPArchive::Release::Patterns. It then writes to stdout a
+           Release file containing an MD5, SHA1 and SHA256 digest for each
+           file.
+
+           Values for the additional metadata fields in the Release file are
+           taken from the corresponding variables under
+           APT::FTPArchive::Release, e.g.  APT::FTPArchive::Release::Origin.
+           The supported fields are: Origin, Label, Suite, Version, Codename,
+           Date, Valid-Until, Architectures, Components, Description.
+
+       ggeenneerraattee
+           The generate command is designed to be runnable from a cron script
+           and builds indexes according to the given config file. The config
+           language provides a flexible means of specifying which index files
+           are built from which directories, as well as providing a simple
+           means of maintaining the required settings.
+
+       cclleeaann
+           The clean command tidies the databases used by the given
+           configuration file by removing any records that are no longer
+           necessary.
+
+TTHHEE GGEENNEERRAATTEE CCOONNFFIIGGUURRAATTIIOONN
+       The generate command uses a configuration file to describe the archives
+       that are going to be generated. It follows the typical ISC
+       configuration format as seen in ISC tools like bind 8 and dhcpd.
+       aapptt..ccoonnff(5) contains a description of the syntax. Note that the
+       generate configuration is parsed in sectional manner, but aapptt..ccoonnff(5)
+       is parsed in a tree manner. This only effects how the scope tag is
+       handled.
+
+       The generate configuration has four separate sections, each described
+       below.
+
+   DDiirr SSeeccttiioonn
+       The Dir section defines the standard directories needed to locate the
+       files required during the generation process. These directories are
+       prepended certain relative paths defined in later sections to produce a
+       complete an absolute path.
+
+       AArrcchhiivveeDDiirr
+           Specifies the root of the FTP archive, in a standard Debian
+           configuration this is the directory that contains the ls-LR and
+           dist nodes.
+
+       OOvveerrrriiddeeDDiirr
+           Specifies the location of the override files.
+
+       CCaacchheeDDiirr
+           Specifies the location of the cache files.
+
+       FFiilleeLLiissttDDiirr
+           Specifies the location of the file list files, if the FileList
+           setting is used below.
+
+   DDeeffaauulltt SSeeccttiioonn
+       The Default section specifies default values, and settings that control
+       the operation of the generator. Other sections may override these
+       defaults with a per-section setting.
+
+       PPaacckkaaggeess::::CCoommpprreessss
+           Sets the default compression schemes to use for the package index
+           files. It is a string that contains a space separated list of at
+           least one of: '.' (no compression), 'gzip' and 'bzip2'. The default
+           for all compression schemes is '. gzip'.
+
+       PPaacckkaaggeess::::EExxtteennssiioonnss
+           Sets the default list of file extensions that are package files.
+           This defaults to '.deb'.
+
+       SSoouurrcceess::::CCoommpprreessss
+           This is similar to Packages::Compress except that it controls the
+           compression for the Sources files.
+
+       SSoouurrcceess::::EExxtteennssiioonnss
+           Sets the default list of file extensions that are source files.
+           This defaults to '.dsc'.
+
+       CCoonntteennttss::::CCoommpprreessss
+           This is similar to Packages::Compress except that it controls the
+           compression for the Contents files.
+
+       TTrraannssllaattiioonn::::CCoommpprreessss
+           This is similar to Packages::Compress except that it controls the
+           compression for the Translation-en master file.
+
+       DDeeLLiinnkkLLiimmiitt
+           Specifies the number of kilobytes to delink (and replace with hard
+           links) per run. This is used in conjunction with the per-section
+           External-Links setting.
+
+       FFiilleeMMooddee
+           Specifies the mode of all created index files. It defaults to 0644.
+           All index files are set to this mode with no regard to the umask.
+
+       LLoonnggDDeessccrriippttiioonn
+           Specifies whether long descriptions should be included in the
+           Packages file or split out into a master Translation-en file.
+
+   TTrreeeeDDeeffaauulltt SSeeccttiioonn
+       Sets defaults specific to Tree sections. All of these variables are
+       substitution variables and have the strings $(DIST), $(SECTION) and
+       $(ARCH) replaced with their respective values.
+
+       MMaaxxCCoonntteennttssCChhaannggee
+           Sets the number of kilobytes of contents files that are generated
+           each day. The contents files are round-robined so that over several
+           days they will all be rebuilt.
+
+       CCoonntteennttssAAggee
+           Controls the number of days a contents file is allowed to be
+           checked without changing. If this limit is passed the mtime of the
+           contents file is updated. This case can occur if the package file
+           is changed in such a way that does not result in a new contents
+           file [override edit for instance]. A hold off is allowed in hopes
+           that new .debs will be installed, requiring a new file anyhow. The
+           default is 10, the units are in days.
+
+       DDiirreeccttoorryy
+           Sets the top of the .deb directory tree. Defaults to
+           $(DIST)/$(SECTION)/binary-$(ARCH)/
+
+       SSrrccDDiirreeccttoorryy
+           Sets the top of the source package directory tree. Defaults to
+           $(DIST)/$(SECTION)/source/
+
+       PPaacckkaaggeess
+           Sets the output Packages file. Defaults to
+           $(DIST)/$(SECTION)/binary-$(ARCH)/Packages
+
+       SSoouurrcceess
+           Sets the output Sources file. Defaults to
+           $(DIST)/$(SECTION)/source/Sources
+
+       TTrraannssllaattiioonn
+           Sets the output Translation-en master file with the long
+           descriptions if they should be not included in the Packages file.
+           Defaults to $(DIST)/$(SECTION)/i18n/Translation-en
+
+       IInntteerrnnaallPPrreeffiixx
+           Sets the path prefix that causes a symlink to be considered an
+           internal link instead of an external link. Defaults to
+           $(DIST)/$(SECTION)/
+
+       CCoonntteennttss
+           Sets the output Contents file. Defaults to
+           $(DIST)/$(SECTION)/Contents-$(ARCH). If this setting causes
+           multiple Packages files to map onto a single Contents file (as is
+           the default) then aapptt--ffttppaarrcchhiivvee will integrate those package files
+           together automatically.
+
+       CCoonntteennttss::::HHeeaaddeerr
+           Sets header file to prepend to the contents output.
+
+       BBiinnCCaacchheeDDBB
+           Sets the binary cache database to use for this section. Multiple
+           sections can share the same database.
+
+       FFiilleeLLiisstt
+           Specifies that instead of walking the directory tree,
+           aapptt--ffttppaarrcchhiivvee should read the list of files from the given file.
+           Relative files names are prefixed with the archive directory.
+
+       SSoouurrcceeFFiilleeLLiisstt
+           Specifies that instead of walking the directory tree,
+           aapptt--ffttppaarrcchhiivvee should read the list of files from the given file.
+           Relative files names are prefixed with the archive directory. This
+           is used when processing source indexes.
+
+   TTrreeee SSeeccttiioonn
+       The Tree section defines a standard Debian file tree which consists of
+       a base directory, then multiple sections in that base directory and
+       finally multiple Architectures in each section. The exact pathing used
+       is defined by the Directory substitution variable.
+
+       The Tree section takes a scope tag which sets the $(DIST) variable and
+       defines the root of the tree (the path is prefixed by ArchiveDir).
+       Typically this is a setting such as dists/wheezy.
+
+       All of the settings defined in the TreeDefault section can be used in a
+       Tree section as well as three new variables.
+
+       When processing a Tree section aapptt--ffttppaarrcchhiivvee performs an operation
+       similar to:
+
+           for i in Sections do
+              for j in Architectures do
+                 Generate for DIST=scope SECTION=i ARCH=j
+
+
+
+       SSeeccttiioonnss
+           This is a space separated list of sections which appear under the
+           distribution; typically this is something like main contrib
+           non-free
+
+       AArrcchhiitteeccttuurreess
+           This is a space separated list of all the architectures that appear
+           under search section. The special architecture 'source' is used to
+           indicate that this tree has a source archive.
+
+       LLoonnggDDeessccrriippttiioonn
+           Specifies whether long descriptions should be included in the
+           Packages file or split out into a master Translation-en file.
+
+       BBiinnOOvveerrrriiddee
+           Sets the binary override file. The override file contains section,
+           priority and maintainer address information.
+
+       SSrrccOOvveerrrriiddee
+           Sets the source override file. The override file contains section
+           information.
+
+       EExxttrraaOOvveerrrriiddee
+           Sets the binary extra override file.
+
+       SSrrccEExxttrraaOOvveerrrriiddee
+           Sets the source extra override file.
+
+   BBiinnDDiirreeccttoorryy SSeeccttiioonn
+       The bindirectory section defines a binary directory tree with no
+       special structure. The scope tag specifies the location of the binary
+       directory and the settings are similar to the Tree section with no
+       substitution variables or SectionArchitecture settings.
+
+       PPaacckkaaggeess
+           Sets the Packages file output.
+
+       SSoouurrcceess
+           Sets the Sources file output. At least one of Packages or Sources
+           is required.
+
+       CCoonntteennttss
+           Sets the Contents file output (optional).
+
+       BBiinnOOvveerrrriiddee
+           Sets the binary override file.
+
+       SSrrccOOvveerrrriiddee
+           Sets the source override file.
+
+       EExxttrraaOOvveerrrriiddee
+           Sets the binary extra override file.
+
+       SSrrccEExxttrraaOOvveerrrriiddee
+           Sets the source extra override file.
+
+       BBiinnCCaacchheeDDBB
+           Sets the cache DB.
+
+       PPaatthhPPrreeffiixx
+           Appends a path to all the output paths.
+
+       FFiilleeLLiisstt, SSoouurrcceeFFiilleeLLiisstt
+           Specifies the file list file.
+
+TTHHEE BBIINNAARRYY OOVVEERRRRIIDDEE FFIILLEE
+       The binary override file is fully compatible with ddppkkgg--ssccaannppaacckkaaggeess(1).
+       It contains four fields separated by spaces. The first field is the
+       package name, the second is the priority to force that package to, the
+       third is the section to force that package to and the final field is
+       the maintainer permutation field.
+
+       The general form of the maintainer field is:
+
+           old [// oldn]* => new
+
+       or simply,
+
+           new
+
+       The first form allows a double-slash separated list of old email
+       addresses to be specified. If any of those are found then new is
+       substituted for the maintainer field. The second form unconditionally
+       substitutes the maintainer field.
+
+TTHHEE SSOOUURRCCEE OOVVEERRRRIIDDEE FFIILLEE
+       The source override file is fully compatible with ddppkkgg--ssccaannssoouurrcceess(1).
+       It contains two fields separated by spaces. The first field is the
+       source package name, the second is the section to assign it.
+
+TTHHEE EEXXTTRRAA OOVVEERRRRIIDDEE FFIILLEE
+       The extra override file allows any arbitrary tag to be added or
+       replaced in the output. It has three columns, the first is the package,
+       the second is the tag and the remainder of the line is the new value.
+
+OOPPTTIIOONNSS
+       All command line options may be set using the configuration file, the
+       descriptions indicate the configuration option to set. For boolean
+       options you can override the config file by using something like
+       --ff--,----nnoo--ff, --ff==nnoo or several other variations.
+
+       ----mmdd55, ----sshhaa11, ----sshhaa225566
+           Generate the given checksum. These options default to on, when
+           turned off the generated index files will not have the checksum
+           fields where possible. Configuration Items:
+           APT::FTPArchive::_C_h_e_c_k_s_u_m and APT::FTPArchive::_I_n_d_e_x::_C_h_e_c_k_s_u_m
+           where _I_n_d_e_x can be Packages, Sources or Release and _C_h_e_c_k_s_u_m can be
+           MD5, SHA1 or SHA256.
+
+       --dd, ----ddbb
+           Use a binary caching DB. This has no effect on the generate
+           command. Configuration Item: APT::FTPArchive::DB.
+
+       --qq, ----qquuiieett
+           Quiet; produces output suitable for logging, omitting progress
+           indicators. More q's will produce more quiet up to a maximum of 2.
+           You can also use --qq==## to set the quiet level, overriding the
+           configuration file. Configuration Item: quiet.
+
+       ----ddeelliinnkk
+           Perform Delinking. If the External-Links setting is used then this
+           option actually enables delinking of the files. It defaults to on
+           and can be turned off with ----nnoo--ddeelliinnkk. Configuration Item:
+           APT::FTPArchive::DeLinkAct.
+
+       ----ccoonntteennttss
+           Perform contents generation. When this option is set and package
+           indexes are being generated with a cache DB then the file listing
+           will also be extracted and stored in the DB for later use. When
+           using the generate command this option also allows the creation of
+           any Contents files. The default is on. Configuration Item:
+           APT::FTPArchive::Contents.
+
+       --ss, ----ssoouurrccee--oovveerrrriiddee
+           Select the source override file to use with the sources command.
+           Configuration Item: APT::FTPArchive::SourceOverride.
+
+       ----rreeaaddoonnllyy
+           Make the caching databases read only. Configuration Item:
+           APT::FTPArchive::ReadOnlyDB.
+
+       --aa, ----aarrcchh
+           Accept in the packages and contents commands only package files
+           matching *_arch.deb or *_all.deb instead of all package files in
+           the given path. Configuration Item: APT::FTPArchive::Architecture.
+
+       AAPPTT::::FFTTPPAArrcchhiivvee::::AAllwwaayyssSSttaatt
+           aapptt--ffttppaarrcchhiivvee(1) caches as much as possible of metadata in a
+           cachedb. If packages are recompiled and/or republished with the
+           same version again, this will lead to problems as the now outdated
+           cached metadata like size and checksums will be used. With this
+           option enabled this will no longer happen as it will be checked if
+           the file was changed. Note that this option is set to "false" by
+           default as it is not recommend to upload multiply versions/builds
+           of a package with the same versionnumber, so in theory nobody will
+           have these problems and therefore all these extra checks are
+           useless.
+
+       AAPPTT::::FFTTPPAArrcchhiivvee::::LLoonnggDDeessccrriippttiioonn
+           This configuration option defaults to "true" and should only be set
+           to "false" if the Archive generated with aapptt--ffttppaarrcchhiivvee(1) also
+           provides Translation files. Note that the Translation-en master
+           file can only be created in the generate command.
+
+       --hh, ----hheellpp
+           Show a short usage summary.
+
+       --vv, ----vveerrssiioonn
+           Show the program version.
+
+       --cc, ----ccoonnffiigg--ffiillee
+           Configuration File; Specify a configuration file to use. The
+           program will read the default configuration file and then this
+           configuration file. If configuration settings need to be set before
+           the default configuration files are parsed specify a file with the
+           AAPPTT__CCOONNFFIIGG environment variable. See aapptt..ccoonnff(5) for syntax
+           information.
+
+       --oo, ----ooppttiioonn
+           Set a Configuration Option; This will set an arbitrary
+           configuration option. The syntax is --oo FFoooo::::BBaarr==bbaarr.  --oo and
+           ----ooppttiioonn can be used multiple times to set different options.
+
+EEXXAAMMPPLLEESS
+       To create a compressed Packages file for a directory containing binary
+       packages (.deb):
+
+           aapptt--ffttppaarrcchhiivvee packages _d_i_r_e_c_t_o_r_y | ggzziipp > Packages.gz
+
+SSEEEE AALLSSOO
+       aapptt..ccoonnff(5)
+
+DDIIAAGGNNOOSSTTIICCSS
+       aapptt--ffttppaarrcchhiivvee returns zero on normal operation, decimal 100 on error.
+
+BBUUGGSS
+       AAPPTT bbuugg ppaaggee[1]. If you wish to report a bug in APT, please see
+       /usr/share/doc/debian/bug-reporting.txt or the rreeppoorrttbbuugg(1) command.
+
+AAUUTTHHOORRSS
+       JJaassoonn GGuunntthhoorrppee
+
+       AAPPTT tteeaamm
+
+NNOOTTEESS
+        1. APT bug page
+           http://bugs.debian.org/src:apt
+
+
+
+APT 1.0.1ubuntu2                 09 June 2012                APT-FTPARCHIVE(1)

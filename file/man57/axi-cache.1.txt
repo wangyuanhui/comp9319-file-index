@@ -1,0 +1,88 @@
+AXI-CACHE(1)                     User Commands                    AXI-CACHE(1)
+
+
+
+NNAAMMEE
+       axi-cache - query the Apt Xapian Index
+
+SSYYNNOOPPSSIISS
+       aaxxii--ccaacchhee [_o_p_t_i_o_n_s] _c_o_m_m_a_n_d [_a_r_g_s]
+
+DDEESSCCRRIIPPTTIIOONN
+       Query the Apt Xapian index.
+
+   CCoommmmaannddss::
+              search commands:
+
+       axi-cache again [query]
+              repeat the last search, possibly adding query terms
+
+       axi-cache help
+              show a summary of commands
+
+       axi-cache info
+              print information about the apt-xapian-index environment
+
+       axi-cache last [count]
+              show the last results again
+
+       axi-cache more [count]
+              show more terms from the last search
+
+       axi-cache rdetails pkgname[s]
+              show details of reverse relationships for the given packages
+
+       axi-cache search [terms]
+              start a new search
+
+              apt-cache front-ends:
+
+       axi-cache depends pkgname[s]
+              run apt-cache depends pkgname[s]
+
+       axi-cache madison pkgname[s]
+              run apt-cache madison pkgname[s]
+
+       axi-cache policy pkgname[s]
+              run apt-cache policy pkgname[s]
+
+       axi-cache rdepends pkgname[s]
+              run apt-cache rdepends pkgname[s]
+
+       axi-cache show pkgname[s]
+              run apt-cache show pkgname[s]
+
+       axi-cache showpkg pkgname[s]
+              run apt-cache showpkg pkgname[s]
+
+       axi-cache showsrc pkgname[s]
+              run apt-cache showsrc pkgname[s]
+
+OOPPTTIIOONNSS
+       ----vveerrssiioonn
+              show program's version number and exit
+
+       --hh, ----hheellpp
+              show this help message and exit
+
+       --ss SORT, ----ssoorrtt=_S_O_R_T
+              sort     by     the     given     value,     as     listed    in
+              _/_v_a_r_/_l_i_b_/_a_p_t_-_x_a_p_i_a_n_-_i_n_d_e_x_/_v_a_l_u_e_s. Add  a  '-'  to  reverse  sort
+              order
+
+       ----ttaaggss show matching tags, rather than packages
+
+       ----ttaabbccoommpplleettee=_T_Y_P_E
+              suggest  words  for  tab  completion of the current command line
+              (type is 'plain' or 'partial')
+
+       ----llaasstt use 'show ----llaasstt' to limit tab completion to only  the  packages
+              from the last search results
+
+       ----aallll  disable pagination and always show all results. Note that search
+              results are normally sorted by relevance, so you may find  mean-
+              ingless results at the end of the output
+
+
+
+axi-cache 0.45                   February 2014                    AXI-CACHE(1)

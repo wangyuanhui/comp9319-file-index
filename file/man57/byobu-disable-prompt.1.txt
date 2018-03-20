@@ -1,0 +1,58 @@
+byobu-prompt(1)                      byobu                     byobu-prompt(1)
+
+
+
+NNAAMMEE
+       byobu-prompt,   byobu-enable-prompt,  byobu-disable-prompt  -  add  and
+       remove a nice color prompt to your shell configuration
+
+
+SSYYNNOOPPSSIISS
+       bbyyoobbuu--pprroommpptt
+
+       bbyyoobbuu--eennaabbllee--pprroommpptt
+
+       bbyyoobbuu--ddiissaabbllee--pprroommpptt
+
+
+DDEESSCCRRIIPPTTIIOONN
+       Byobu provides a special  PS1  prompt  command,  compatible  with  Bash
+       shells.   It will display the previous command's exit code, if it's not
+       zero.  It will use 3 separate colors for the local username,  hostname,
+       and the current working directory.
+
+       bbyyoobbuu--eennaabbllee--pprroommpptt will add one line to your _~_/_._b_a_s_h_r_c.
+
+       You  can  safely  remove  the  line  from your _~_/_._b_a_s_h_r_c, which ends in
+       ##bbyyoobbuu--pprroommpptt.
+
+       bbyyoobbuu--ddiissaabbllee--pprroommpptt  will  remove   its   color   configuration   from
+       _~_/_._b_a_s_h_r_c.
+
+       bbyyoobbuu--pprroommpptt is an interactive wrapper of the previous two tools.
+
+
+BBUUGGSS
+       This is currently only compatible with bbaasshh((11)).
+
+
+SSEEEE AALLSSOO
+       bbaasshh(1)
+       hhttttpp::////bbyyoobbuu..ccoo
+
+
+AAUUTTHHOORR
+       This  manpage  and  the  utility were written by Dustin Kirkland <kirk-
+       land@byobu.co> for Ubuntu systems (but may be used by others).  Permis-
+       sion  is  granted to copy, distribute and/or modify this document under
+       the terms of the GNU General Public License, Version 3 published by the
+       Free Software Foundation.
+
+       The  complete  text  of  the GNU General Public License can be found in
+       _/_u_s_r_/_s_h_a_r_e_/_c_o_m_m_o_n_-_l_i_c_e_n_s_e_s_/_G_P_L  on   Debian/Ubuntu   systems,   or   in
+       _/_u_s_r_/_s_h_a_r_e_/_d_o_c_/_f_e_d_o_r_a_-_r_e_l_e_a_s_e_-_*_/_G_P_L on Fedora systems, or on the web at
+       _h_t_t_p_:_/_/_w_w_w_._g_n_u_._o_r_g_/_l_i_c_e_n_s_e_s_/_g_p_l_._t_x_t.
+
+
+
+byobu                            26 July 2013                  byobu-prompt(1)

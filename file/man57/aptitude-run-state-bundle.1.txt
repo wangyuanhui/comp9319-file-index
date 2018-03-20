@@ -1,0 +1,89 @@
+APTITUDE-RUN-STATE(1)       Command-line reference       APTITUDE-RUN-STATE(1)
+
+
+
+NNAAMMEE
+       aptitude-run-state-bundle - unpack an aptitude state bundle and invoke
+       aptitude on it
+
+SSYYNNOOPPSSIISS
+       aappttiittuuddee--rruunn--ssttaattee--bbuunnddllee [<_o_p_t_i_o_n_s>...] <_i_n_p_u_t_-_f_i_l_e>
+                                 [<_p_r_o_g_r_a_m> [<_a_r_g_u_m_e_n_t_s>...]]
+
+DDEESSCCRRIIPPTTIIOONN
+       aappttiittuuddee--rruunn--ssttaattee--bbuunnddllee unpacks the given aptitude state bundle
+       created by aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee(1) to a temporary directory,
+       invokes <_p_r_o_g_r_a_m> on it with the supplied <_a_r_g_u_m_e_n_t_s>, and removes the
+       temporary directory afterwards. If <_p_r_o_g_r_a_m> is not supplied, it
+       defaults to aappttiittuuddee(8).
+
+OOPPTTIIOONNSS
+       The following options may occur on the command-line before the input
+       file. Options following the input file are presumed to be arguments to
+       aappttiittuuddee.
+
+       ----aappppeenndd--aarrggss
+           Place the options that give the location of the state bundle at the
+           end of the command line when invoking <_p_r_o_g_r_a_m>, rather than at the
+           beginning (the default is to place options at the beginning).
+
+       ----hheellpp
+           Display a brief usage summary.
+
+       ----pprreeppeenndd--aarrggss
+           Place the options that give the location of the state bundle at the
+           beginning of the command line when invoking <_p_r_o_g_r_a_m>, overriding
+           any previous ----aappppeenndd--aarrggss (the default is to place options at the
+           beginning).
+
+       ----nnoo--cclleeaann
+           Do not remove the unpacked state directory after running aappttiittuuddee.
+           You might want to use this if, for instance, you are debugging a
+           problem that appears when aappttiittuuddee's state file is modified. When
+           aappttiittuuddee finishes running, the name of the state directory will be
+           printed so that you can access it in the future.
+
+           This option is enabled automatically by ----ssttaatteeddiirr.
+
+       ----rreeaallllyy--cclleeaann
+           Delete the state directory after running aappttiittuuddee, even if
+           ----nnoo--cclleeaann or ----ssttaatteeddiirr was supplied.
+
+       ----ssttaatteeddiirr
+           Instead of treating the input file as a state bundle, treat it as
+           an unpacked state bundle. For instance, you can use this to access
+           the state directory that was created by a prior run with
+           ----nnoo--cclleeaann.
+
+       ----uunnppaacckk
+           Unpack the input file to a temporary directory, but don't actually
+           run aappttiittuuddee.
+
+SSEEEE AALLSSOO
+       aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee(1), aappttiittuuddee(8), aapptt(8)
+
+AAUUTTHHOORR
+       DDaanniieell BBuurrrroowwss <dburrows@debian.org>
+           Author.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright 2007 Daniel Burrows.
+
+       This manual page is free software; you can redistribute it and/or
+       modify it under the terms of the GNU General Public License as
+       published by the Free Software Foundation; either version 2 of the
+       License, or (at your option) any later version.
+
+       This manual page is distributed in the hope that it will be useful, but
+       WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+       General Public License for more details.
+
+       You should have received a copy of the GNU General Public License along
+       with this program; if not, write to the Free Software Foundation, Inc.,
+       51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+
+
+aptitude-run-state-bundle 0.6.    02/17/2014             APTITUDE-RUN-STATE(1)

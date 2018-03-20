@@ -1,0 +1,68 @@
+add-apt-repository(1)       General Commands Manual      add-apt-repository(1)
+
+
+
+NNAAMMEE
+       add-apt-repository  -  Adds a repository into the /etc/apt/sources.list
+       or /etc/apt/sources.list.d or removes an existing one
+
+SSYYNNOOPPSSIISS
+       aadddd--aapptt--rreeppoossiittoorryy _[_O_P_T_I_O_N_S_] _R_E_P_O_S_I_T_O_R_Y
+
+DDEESSCCRRIIPPTTIIOONN
+       aadddd--aapptt--rreeppoossiittoorryy is a script which adds an external APT repository to
+       either  /etc/apt/sources.list  or a file in /etc/apt/sources.list.d/ or
+       removes an already existing repository.
+
+       The options supported by add-apt-repository are:
+
+       --hh,, ----hheellpp Show help message and exit
+
+       --mm,, ----mmaassssiivvee--ddeebbuugg Print a lot of debug  information  to  the  command
+       line
+
+       --rr,, ----rreemmoovvee Remove the specified repository
+
+       --yy,, ----yyeess Assume yes to all queries
+
+       --kk,, ----kkeeyysseerrvveerr Use a custom keyserver URL instead of the default
+
+       --ss,,  ----eennaabbllee--ssoouurrccee  Allow downloading of the source packages from the
+       repository
+
+
+
+RREEPPOOSSIITTOORRYY SSTTRRIINNGG
+       _R_E_P_O_S_I_T_O_R_Y can  be  either  a  line  that  can  be  added  directly  to
+       sources.list(5),  in the form ppa:<user>/<ppa-name> for adding Personal
+       Package Archives, or a distribution component to enable.
+
+       In  the   first   form,   _R_E_P_O_S_I_T_O_R_Y   will   just   be   appended   to
+       /etc/apt/sources.list.
+
+       In  the second form, ppa:<user>/<ppa-name> will be expanded to the full
+       deb  line  of  the  PPA  and   added   into   a   new   file   in   the
+       /etc/apt/sources.list.d/  directory.   The  GPG public key of the newly
+       added PPA will also be downloaded and added to apt's keyring.
+
+       In the third form, the given distribution component will be enabled for
+       all sources.
+
+
+SSEEEE AALLSSOO
+       ssoouurrcceess..lliisstt(5)
+
+
+CCOOPPYYRRIIGGHHTT
+       This manual page was written by Chow Loong Jin <hyperair@gmail.com> for
+       the Debian system (but may be used by others). Permission is granted to
+       copy, distribute and/or modify this document under the terms of the GNU
+       General Public License, Version 2 or any later version published by the
+       Free Software Foundation.
+
+       On  Debian systems, the complete text of the GNU General Public License
+       can be found in /usr/share/common-licenses.
+
+
+
+                                                         add-apt-repository(1)

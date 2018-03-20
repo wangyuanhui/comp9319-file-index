@@ -1,0 +1,91 @@
+BIOSDEVNAME(1)              General Commands Manual             BIOSDEVNAME(1)
+
+
+
+NNAAMMEE
+       biosdevname - give BIOS-given name of a device
+
+SSYYNNOOPPSSIISS
+       bbiioossddeevvnnaammee [options] [args]...
+
+DDEESSCCRRIIPPTTIIOONN
+       biosdevname  takes a kernel device name as an argument, and returns the
+       BIOS-given name it "should" be.
+
+OOPPTTIIOONNSS
+       --ii,, ----iinntteerrffaaccee
+              Treat [args] as ethernet devs
+
+       --dd,, ----ddeebbuugg
+              Enable debugging
+
+       ----ppoolliiccyy _[_p_h_y_s_i_c_a_l_|_a_l_l___e_t_h_N_]
+
+       ----pprreeffiixx _[_s_t_r_i_n_g_]
+              string use for embedded NICs in the physical policy (default=em)
+
+       ----nnooppiirrqq
+              Do not use $PIR table for mapping PCI device to slot. Some  BIOS
+              have incorrect values.
+
+       ----ssmmbbiiooss _[_x_._y_]
+              Require minimum SMBIOS version x.y
+
+PPOOLLIICCIIEESS
+       The  pphhyyssiiccaall  policy  is  the current default.  However, when invoking
+       biosdevname in udev rules, one should always  specify  the  policy  you
+       want, as the default has changed over time.
+       The pphhyyssiiccaall policy uses the following scheme:
+
+       em<port>[_<virtual instance>]
+              for embedded NICs
+
+       p<slot>p<port>[_<virtual instance>]
+              for cards in PCI slots
+
+       The    aallll__eetthhNN  policy  makes  a  best  guess at what the device order
+              should be, with embedded devices first, PCI cards  in  ascending
+              slot order, and ports in ascending PCI bus/device/function order
+              breadth-first.  However, this policy _d_o_e_s _n_o_t _w_o_r_k if  your  PCI
+              devices  are hot-plugged or hot-pluggable, including the virtual
+              functions on an SR-IOV device.  In  a  hot-plug  scenario,  each
+              separate  udev  instance  will be invoked in parallel, while the
+              device tree is still being populated  with  new  devices.   Each
+              udev  instance  will  see  a different PCI tree, and thus cannot
+              provide consistent enumeration.  Use of this  policy  should  be
+              limited  to  only scenarios where all PCI devices are present at
+              boot (cold-plug).
+
+
+EEXXIITT CCOODDEESS
+       Returns 0 on success, with BIOS-suggested name printed to stdout.
+       Returns 1 on provided device name lookup failure.
+       Returns 2 if system BIOS does not provide naming information.  biosdev-
+       name  requires  system  BIOS  to provide naming information, either via
+       SMBIOS or sysfs files.
+       Returns 3 if not run as root but requires root privileges.
+       Returns 4 if running in a virtual machine.
+
+
+SSEEEE AALLSSOO
+       http://linux.dell.com/wiki/index.php/Oss/libnetdevname
+       http://linux.dell.com/files/biosdevname/
+       git://linux.dell.com/biosdevname.git
+
+
+RREELLAATTEEDD PPRROOGGRRAAMMSS
+       The ddmmiiddeeccooddee package contains two tools useful for debugging BIOS fea-
+       tures  that biosdevname uses, specifically ddmmiiddeeccooddee to read the SMBIOS
+       Type 9 and Type 41 tables, and bbiioossddeeccooddee to read the PCI  IRQ  Routing
+       Table.   Please include the output of each of these programs in any bug
+       reports.
+
+AAUUTTHHOORR
+       biosdevname was written by  Matt Domsch <Matt_Domsch@dell.com>
+
+       This manual page was written by Rudy  Gevaert  <Rudy.Gevaert@UGent.be>,
+       for the Debian project (but may be used by others).
+
+
+
+                                 Nov 28, 2010                   BIOSDEVNAME(1)

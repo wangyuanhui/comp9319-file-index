@@ -1,0 +1,37 @@
+byobu-export(1)                      byobu                     byobu-export(1)
+
+
+
+NNAAMMEE
+       byobu-export - DEPRECATED
+
+
+SSYYNNOOPPSSIISS
+       bbyyoobbuu--eexxppoorrtt
+
+
+DDEESSCCRRIIPPTTIIOONN
+       The bbyyoobbuu--eexxppoorrtt utility is now deprecated.
+
+       To  install byobu on a system for which byobu is not packaged, or where
+       you are not the root user, simply:
+        * Download the latest release (>= 3.0) from:
+           https://launchpad.net/byobu/+download
+        * And follow the instructions in the README
+
+
+AAUUTTHHOORR
+       This manpage and the utility were written  by  Dustin  Kirkland  <kirk-
+       land@byobu.co> for Ubuntu systems (but may be used by others).  Permis-
+       sion is granted to copy, distribute and/or modify this document and the
+       utility  under  the  terms of the GNU General Public License, Version 3
+       published by the Free Software Foundation.
+
+       The complete text of the GNU General Public License  can  be  found  in
+       _/_u_s_r_/_s_h_a_r_e_/_c_o_m_m_o_n_-_l_i_c_e_n_s_e_s_/_G_P_L   on   Debian/Ubuntu   systems,   or  in
+       _/_u_s_r_/_s_h_a_r_e_/_d_o_c_/_f_e_d_o_r_a_-_r_e_l_e_a_s_e_-_*_/_G_P_L on Fedora systems, or on the web at
+       _h_t_t_p_:_/_/_w_w_w_._g_n_u_._o_r_g_/_l_i_c_e_n_s_e_s_/_g_p_l_._t_x_t.
+
+
+
+byobu                             2 Aug 2010                   byobu-export(1)

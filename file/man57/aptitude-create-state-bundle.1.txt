@@ -1,0 +1,83 @@
+APTITUDE-CREATE-ST(1)       Command-line reference       APTITUDE-CREATE-ST(1)
+
+
+
+NNAAMMEE
+       aptitude-create-state-bundle - bundle the current aptitude state
+
+SSYYNNOOPPSSIISS
+       aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee [<_o_p_t_i_o_n_s>...] <_o_u_t_p_u_t_-_f_i_l_e>
+
+DDEESSCCRRIIPPTTIIOONN
+       aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee produces a compressed archive storing the
+       files that are required to replicate the current package archive state.
+       The following files and directories are included in the bundle:
+
+       +o   $$HHOOMMEE/.aptitude
+
+       +o   /var/lib/aptitude
+
+       +o   /var/lib/apt
+
+       +o   /var/cache/apt/*.bin
+
+       +o   /etc/apt
+
+       +o   /var/lib/dpkg/status
+
+       The output of this program can be used as an argument to aappttiittuuddee--rruunn--
+       ssttaattee--bbuunnddllee(1).
+
+OOPPTTIIOONNSS
+       ----ffoorrccee--bbzziipp22
+           Override the autodetection of which compression algorithm to use.
+           By default, aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee uses bbzziipp22(1) if it is
+           available, and ggzziipp(1) otherwise. Passing this option forces the
+           use of bbzziipp22 even if it doesn't appear to be available.
+
+       ----ffoorrccee--ggzziipp
+           Override the autodetection of which compression algorithm to use.
+           By default, aappttiittuuddee--ccrreeaattee--ssttaattee--bbuunnddllee uses bbzziipp22(1) if it is
+           available, and ggzziipp(1) otherwise. Passing this option forces the
+           use of ggzziipp even if bbzziipp22 is available.
+
+       ----hheellpp
+           Print a brief usage message, then exit.
+
+       ----pprriinntt--iinnppuuttss
+           Instead of creating a bundle, display a list of the files and
+           directories that the program would include if it generated a
+           bundle.
+
+FFIILLEE FFOORRMMAATT
+       The bundle file is simply a ttaarr(1) file compressed with bbzziipp22(1) or
+       ggzziipp(1), with each of the input directory trees rooted at ".".
+
+SSEEEE AALLSSOO
+       aappttiittuuddee--rruunn--ssttaattee--bbuunnddllee(1), aappttiittuuddee(8), aapptt(8)
+
+AAUUTTHHOORR
+       DDaanniieell BBuurrrroowwss <dburrows@debian.org>
+           Author.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright 2007 Daniel Burrows.
+
+       This manual page is free software; you can redistribute it and/or
+       modify it under the terms of the GNU General Public License as
+       published by the Free Software Foundation; either version 2 of the
+       License, or (at your option) any later version.
+
+       This manual page is distributed in the hope that it will be useful, but
+       WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+       General Public License for more details.
+
+       You should have received a copy of the GNU General Public License along
+       with this program; if not, write to the Free Software Foundation, Inc.,
+       51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+
+
+aptitude-create-state-bundle 0    02/17/2014             APTITUDE-CREATE-ST(1)

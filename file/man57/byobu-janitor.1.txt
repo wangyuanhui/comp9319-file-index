@@ -1,0 +1,45 @@
+byobu-janitor(1)                     byobu                    byobu-janitor(1)
+
+
+
+NNAAMMEE
+       byobu-janitor  -  script  for  cleaning and upgrading environment after
+       upgrades
+
+
+SSYYNNOOPPSSIISS
+       bbyyoobbuu--jjaanniittoorr
+
+
+DDEESSCCRRIIPPTTIIOONN
+       bbyyoobbuu--jjaanniittoorr is script for cleaning  environment  after  upgrades,  it
+       consists  from several tasks where aim is to ensure that environment is
+       ready for new version of byobu.
+
+
+BBUUGGSS
+       None found, yet.
+
+
+SSEEEE AALLSSOO
+       ssccrreeeenn(1), bbyyoobbuu--ccoonnffiigg(1),  bbyyoobbuu--eexxppoorrtt(1),  bbyyoobbuu--ssttaattuuss(1),  bbyyoobbuu--
+       ssttaattuuss--ddeettaaiill((11))
+       hhttttpp::////bbyyoobbuu..ccoo
+
+
+AAUUTTHHOORR
+       This  manpage  was  written by Jan Klepek <jan.klepek at gmail.com> and
+       the utility was written  by  Dustin  Kirkland  <kirkland@byobu.co>  for
+       Ubuntu  systems  (but may be used by others).  Permission is granted to
+       copy, distribute and/or modify this document under the terms of the GNU
+       General  Public License, Version 3 published by the Free Software Foun-
+       dation.
+
+       The complete text of the GNU General Public License  can  be  found  in
+       _/_u_s_r_/_s_h_a_r_e_/_c_o_m_m_o_n_-_l_i_c_e_n_s_e_s_/_G_P_L   on   Debian/Ubuntu   systems,   or  in
+       _/_u_s_r_/_s_h_a_r_e_/_d_o_c_/_f_e_d_o_r_a_-_r_e_l_e_a_s_e_-_*_/_G_P_L on Fedora systems, or on the web at
+       _h_t_t_p_:_/_/_w_w_w_._g_n_u_._o_r_g_/_l_i_c_e_n_s_e_s_/_g_p_l_._t_x_t.
+
+
+
+byobu                           6 January 2011                byobu-janitor(1)
